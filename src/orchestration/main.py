@@ -74,6 +74,8 @@ async def trigger_pipeline(request: PipelineRequest):
             raise HTTPException(status_code=400, detail=response["error"])
             
         return response
+    except HTTPException:
+        raise
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
