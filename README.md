@@ -128,9 +128,11 @@ This forces the orchestrator to fetch agency data, recover from failure if the p
 
 We leverage `pytest` and `pytest-asyncio` for exhaustive unit and integration testing. 
 
-To run the entire suite of tests, run:
+To run the specific test suites for Option 3, run the following commands individually:
 ```bash
-pytest tests/ -v
+uv run pytest tests/test_integration.py -v
+uv run pytest tests/test_listener.py -v
+uv run pytest tests/test_pipelines.py -v
 ```
 
 ### Example Test Output
