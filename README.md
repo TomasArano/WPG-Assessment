@@ -1,5 +1,3 @@
-(All content below replaces the empty file)
-
 # Assessment Option 2 and 3
 
 This repository contains a FastAPI-based backend designed as an Agentic AI Pipeline orchestrator. This system retrieves seismic data from simulated agencies, acts as a polling background orchestrator, and implements conditional logic for automated resilience. 
