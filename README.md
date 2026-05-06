@@ -122,3 +122,24 @@ The test module (`tests/test_integration.py`) comprehensively checks key Option 
 3. **`test_requirement_gracious_error_handling`**:
 	- **How it works:** Feeds corrupted operations (like invalid mathematical expressions `this_is_not_math` ) to the final math service.
 	- **What it verifies:** Checks that failures in sequential multi-tenant pipelines do not crash the REST application. Errors are caught safely, packed into an HTTP 400 response with detail payloads, keeping the server globally reliable.
+
+---
+
+## Belief Module (Task 3, Option 2)
+
+This repository also includes the core `belief_module` implementation located in `src/belief_module/`, which handles 4D spatial querying and Bayesian state management using `xarray`.
+
+### Design Principles and Implementation Notes
+
+For a detailed breakdown of the architecture, separation of concerns, and design patterns used for this component, please refer to the design document: 
+[Task 3 Option 2 Notes](src/belief_module/Task3Option2.md)
+
+### Testing the Belief Module
+
+The module includes its own dedicated test suite (`tests/test_belief_module.py`) to validate grid initialization, epistemic uncertainty updates, physical constraints, and data independence.
+
+You can run this specific test suite using `uv`:
+```bash
+uv run pytest tests/test_belief_module.py
+```
+
