@@ -1,8 +1,31 @@
-# Assessment Option 2 and 3
+# Assessment Maps: Option 2 and Option 3
 
-This repository contains a FastAPI-based backend designed as an Agentic AI Pipeline orchestrator. This system retrieves seismic data from simulated agencies, acts as a polling background orchestrator, and implements conditional logic for automated resilience. 
+This repository contains implementations for both **Option 2** (Belief Module) and **Option 3** (Orchestration) of the technical assessment. 
 
-It satisfies the Option 3 technical assessment constraints via resilient multi-agency polling, task execution process chaining (e.g., retrieving data counting -> evaluating arithmetic expressions), multi-tenant tagging, and metric tracking (execution / wall-clock time).
+Below is an index of how the codebase maps to the respective assessment options and tasks (Tasks 1 & 2):
+
+##  Assessment Index Map
+
+### Option 2: Belief State Updates 
+- **Task 1 (Implementation):** Handled by the module at `src/belief_module/` and its testing suite.
+  - `src/belief_module/__init__.py`
+  - `src/belief_module/grid.py`
+  - `src/belief_module/main.py`
+  - `src/belief_module/updater.py`
+  - `tests/test_belief_module.py`
+- **Task 2 (Design Principles & Notes):** [Task 2 Design Notes](src/belief_module/Task3Option2.md) *(Note: The document acts as Task 2 for Option 2)*
+
+### Option 3: Agentic Orchestration Pipeline
+- **Task 1 (Fault-Tolerant Retrieval):** Handled by the listener service at `src/orchestration/listener.py`.
+- **Task 2 (Execution Orchestrator):** Addressed by the rest of the orchestration and pipeline files:
+  - `src/orchestration/__init__.py`
+  - `src/orchestration/main.py`
+  - `src/orchestration/pipelines.py`
+  - `tests/test_integration.py`
+  - `tests/test_listener.py`
+  - `tests/test_pipelines.py`
+
+---
 
 ## Prerequisites
 - **Python:** 3.13 or higher
@@ -45,9 +68,30 @@ source venv/bin/activate
 pip install fastapi uvicorn httpx pydantic pytest pytest-asyncio numpy scipy
 ```
 
+
 ---
 
-##  Running the Application and Options
+## Belief Module (Option 2)
+
+This repository also includes the core `belief_module` implementation located in `src/belief_module/`, which handles 4D spatial querying and Bayesian state management using `xarray`.
+
+### Design Principles and Implementation Notes
+
+For a detailed breakdown of the architecture, separation of concerns, and design patterns used for this component, please refer to the design document: 
+[Task 2 Option 2 ](src/belief_module/Task3Option2.md)
+
+### Testing the Belief Module
+
+The module includes its own dedicated test suite (`tests/test_belief_module.py`) to validate grid initialization, epistemic uncertainty updates, physical constraints, and data independence.
+
+You can run this specific test suite using `uv`:
+```bash
+uv run pytest tests/test_belief_module.py
+```
+
+---
+
+##  Agentic Orchestration Pipeline, running the API (Option 3)
 
 To start the main FASTAPI orchestration server:
 
@@ -80,7 +124,7 @@ This forces the orchestrator to fetch agency data, recover from failure if the p
 
 ---
 
-##  Testing
+##  Testing Option 3
 
 We leverage `pytest` and `pytest-asyncio` for exhaustive unit and integration testing. 
 
@@ -123,23 +167,5 @@ The test module (`tests/test_integration.py`) comprehensively checks key Option 
 	- **How it works:** Feeds corrupted operations (like invalid mathematical expressions `this_is_not_math` ) to the final math service.
 	- **What it verifies:** Checks that failures in sequential multi-tenant pipelines do not crash the REST application. Errors are caught safely, packed into an HTTP 400 response with detail payloads, keeping the server globally reliable.
 
----
 
-## Belief Module (Task 3, Option 2)
-
-This repository also includes the core `belief_module` implementation located in `src/belief_module/`, which handles 4D spatial querying and Bayesian state management using `xarray`.
-
-### Design Principles and Implementation Notes
-
-For a detailed breakdown of the architecture, separation of concerns, and design patterns used for this component, please refer to the design document: 
-[Task 3 Option 2 Notes](src/belief_module/Task3Option2.md)
-
-### Testing the Belief Module
-
-The module includes its own dedicated test suite (`tests/test_belief_module.py`) to validate grid initialization, epistemic uncertainty updates, physical constraints, and data independence.
-
-You can run this specific test suite using `uv`:
-```bash
-uv run pytest tests/test_belief_module.py
-```
 

@@ -1,4 +1,4 @@
-**Task 3, Option 2: Design Principles and Implementation Notes**
+**Option 2 Task 2: Design Principles and Implementation Notes**
 
 - **Each code component should have clear responsibilities and be easy to swap/update:**
 	- The architecture enforces strict separation of concerns. The `BeliefGrid` exclusively handles spatial querying and state management via `xarray`, whilst the mathematical operations are abstracted behind an Updater protocol interface. By decoupling data storage from computation, either domain can be modified or entirely swapped without triggering cascading changes across the codebase.
