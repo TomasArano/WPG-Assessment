@@ -1,4 +1,7 @@
 import asyncio
+import datetime
+from random import random, randint
+from datetime import timezone
 import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -9,7 +12,7 @@ from src.orchestration.pipelines import Orchestrator, ArithmeticService, Listene
 
 # --- Configuration ---
 POLL_INTERVAL_MINUTES = 5  # The "m" minutes variable
-AGENCY_A = "https://mock-agency-a.com/events" 
+AGENCY_A = "http://127.0.0.1:8000/mock-agency-a" 
 AGENCY_B = "https://mock-agency-b.com/events"
 
 # --- Global State ---
@@ -75,3 +78,16 @@ async def trigger_pipeline(request: PipelineRequest):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+    
+# --- Mock Agency Endpoint for Testing ---
+@app.get("/mock-agency-a")
+async def get_mock_data():
+    """Generates perfect mock data bypassing deduplication by using random EIDs."""
+    return [
+        {
+            "eid": randint(10000, 99999), # Random ID so it's never a duplicate
+            "timestamp": datetime.datetime.now(timezone.utc).isoformat(),
+            "lat": 45.0, "lon": 90.0, "depth": -10.0,
+            "Mw": 5.5, "dist": 100.0, "azi": 45.0, "loclat": 46.0, "loclon": 91.0
+        } for _ in range(5)
+    ]
